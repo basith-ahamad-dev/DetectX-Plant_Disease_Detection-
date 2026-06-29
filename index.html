@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeafMedic AI - Plant Disease Detector</title>
+    <meta name="description" content="Intelligently detect plant diseases from leaf images and get actionable treatment plans.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="leaf-icon"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+                <span>LeafMedic AI</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#scanner-section">Detector</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <a href="#scanner-section" class="btn primary nav-btn">Scan Now</a>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Background Elements with Floating Animation -->
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        
+        <!-- Animated Background Leaves -->
+        <div class="bg-leaf leaf-1">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
+        </div>
+        <div class="bg-leaf leaf-2">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
+        </div>
+        <div class="bg-leaf leaf-3">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
+        </div>
+    </div>
+    
+    <main>
+        <!-- Scanner Section (Hero) -->
+        <section id="scanner-section" class="landing-section pt-navbar">
+            <div class="app-container reveal">
+                <header class="app-header">
+                    <h1 class="hero-title">Diagnose Plant Diseases <span class="highlight">Instantly</span></h1>
+                    <p class="tagline">Upload a picture of a leaf and let our AI model identify the disease and recommend the best eco-friendly treatment.</p>
+                </header>
+
+                <div id="main-content" class="glass-card">
+                    <!-- STATE 1: UPLOAD -->
+                    <section id="upload-state" class="state-section active">
+                        <div class="upload-zone" id="drop-zone">
+                            <input type="file" id="file-input" accept="image/*" hidden>
+                            
+                            <div id="upload-prompt" class="upload-content">
+                                <div class="icon-wrapper bounce-anim">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                </div>
+                                <h3>Upload Leaf Image</h3>
+                                <p>Drag and drop your image here</p>
+                                <span class="divider">or</span>
+                                <button id="browse-btn" class="btn secondary">Browse Files</button>
+                            </div>
+
+                            <div id="preview-container" class="preview-content hidden">
+                                <div class="img-wrapper">
+                                    <img id="image-preview-upload" src="" alt="Selected leaf preview">
+                                    <button id="remove-img-btn" class="icon-btn remove-btn" aria-label="Remove image">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="action-footer">
+                            <button id="analyze-btn" class="btn primary pulse-btn" disabled>
+                                <span>Analyze Image</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- STATE 2: PROCESSING -->
+                    <section id="processing-state" class="state-section hidden">
+                        <div class="processing-container">
+                            <div class="scanner-wrapper">
+                                <img id="image-preview-processing" src="" alt="Scanning leaf">
+                                <div class="scanner-overlay">
+                                    <div class="scanner-line"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="loading-indicator">
+                                <div class="spinner">
+                                    <svg viewBox="0 0 50 50">
+                                        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
+                                    </svg>
+                                </div>
+                                <h3 class="processing-title">Analyzing leaf patterns...</h3>
+                                <p class="processing-subtitle">Identifying potential anomalies using AI</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- STATE 3: RESULTS -->
+                    <section id="results-state" class="state-section hidden">
+                        <div class="results-layout">
+                            <div class="results-visual">
+                                <div class="result-img-wrapper">
+                                    <img id="image-preview-results" src="" alt="Analyzed leaf">
+                                    <div class="scan-overlay-complete"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="results-details">
+                                <div class="diagnosis-header">
+                                    <h2 class="section-label">Diagnosis</h2>
+                                    <div class="diagnosis-badges">
+                                        <span class="badge disease-name" id="result-disease">Tomato Early Blight</span>
+                                        <span class="badge confidence" id="result-confidence">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                            94% Match
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="explanation-section">
+                                    <div class="info-card fade-in" style="animation-delay: 0.1s;">
+                                        <div class="info-header">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                            <h3>Cause & Symptoms</h3>
+                                        </div>
+                                        <p id="result-cause">Caused by the fungus <em>Alternaria solani</em>. Symptoms include small black or brown spots, usually beginning on older leaves.</p>
+                                    </div>
+                                    
+                                    <div class="info-card treatment fade-in" style="animation-delay: 0.3s;">
+                                        <div class="info-header">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                            <h3>Recommended Treatment</h3>
+                                        </div>
+                                        <ul id="result-treatment" class="treatment-list">
+                                            <li>Prune and destroy infected lower leaves.</li>
+                                            <li>Apply copper-based fungicides immediately.</li>
+                                            <li>Improve air circulation by spacing plants.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="action-footer results-footer fade-in" style="animation-delay: 0.5s;">
+                                    <button id="reset-btn" class="btn secondary outline">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                                        Scan Another Plant
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="landing-section alt-bg">
+            <div class="section-container">
+                <div class="section-header reveal">
+                    <h2>How It Works</h2>
+                    <p>Protect your plants in three simple steps.</p>
+                </div>
+                <div class="steps-grid">
+                    <div class="step-card reveal">
+                        <div class="step-img-container">
+                             <img src="https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?auto=format&fit=crop&q=80&w=400&h=300" alt="Take a picture of a leaf">
+                             <div class="step-badge">1</div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Upload Image</h3>
+                            <p>Snap a clear, well-lit photo of the affected plant leaf. Focus on the area with visible spots, discoloration, or damage.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-card reveal" style="transition-delay: 0.15s">
+                        <div class="step-img-container">
+                             <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400&h=300" alt="AI processing data">
+                             <div class="step-badge">2</div>
+                        </div>
+                        <div class="step-content">
+                            <h3>AI Analysis</h3>
+                            <p>Our deep learning vision model analyzes the leaf's patterns, comparing it against a vast database of known plant pathogens.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card reveal" style="transition-delay: 0.3s">
+                        <div class="step-img-container">
+                             <img src="https://images.unsplash.com/photo-1416879598555-220b8bf9736c?auto=format&fit=crop&q=80&w=400&h=300" alt="Healthy plant treatment">
+                             <div class="step-badge">3</div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Get Treatment</h3>
+                            <p>Receive a high-confidence diagnosis instantly, complete with actionable, eco-friendly treatment plans and remedies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="landing-section">
+            <div class="section-container about-grid">
+                <div class="about-text reveal">
+                    <div class="badge-small">Our Mission</div>
+                    <h2>Empowering Growers with Artificial Intelligence</h2>
+                    <p>LeafMedic AI was built to help farmers, gardeners, and plant enthusiasts protect their crops and houseplants from devastating diseases before they spread.</p>
+                    <p>By leveraging state-of-the-art computer vision models trained on thousands of plant images, we bring expert-level agronomy right to your fingertips. Whether it's early blight on your tomatoes or rust on your roses, we've got you covered.</p>
+                    
+                    <ul class="feature-list">
+                        <li>
+                            <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                            <span>Over 95% detection accuracy</span>
+                        </li>
+                        <li>
+                            <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                            <span>Supports 30+ crop and plant species</span>
+                        </li>
+                        <li>
+                            <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                            <span>Provides safe & organic remedy options</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="about-image-wrapper reveal" style="transition-delay: 0.2s">
+                    <img class="main-about-img" src="https://images.unsplash.com/photo-1530836369250-ef71a3f5e48c?auto=format&fit=crop&q=80&w=600&h=700" alt="Farmer in greenhouse">
+                    <div class="floating-stat float-anim">
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                        </div>
+                        <div class="stat-text">
+                            <h4>30,000+</h4>
+                            <p>Scans Completed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="leaf-icon"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
+                    <span>LeafMedic AI</span>
+                </div>
+                <p>&copy; 2026 LeafMedic AI. Building a greener, healthier future.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
