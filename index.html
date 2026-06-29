@@ -130,25 +130,36 @@
 <body class="bg-background font-body-md text-on-surface overflow-x-hidden">
 <!-- TopNavBar -->
 <nav class="w-full sticky top-0 z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md border-b border-white/20 dark:border-white/10 shadow-sm dark:shadow-none">
-<div class="flex justify-between items-center w-full px-margin-desktop h-20 max-w-container-max mx-auto">
-<a href="#home" class="flex items-center gap-3 transition-transform hover:scale-105">
-<img src="assets/DetectX.png" alt="DetectX Icon" class="h-16 w-auto object-contain">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-container-max mx-auto">
+<a href="#home" class="flex items-center gap-2 md:gap-3 transition-transform hover:scale-105">
+<img src="assets/DetectX.png" alt="DetectX Icon" class="h-10 md:h-16 w-auto object-contain">
 <div class="flex flex-col justify-center">
-<span class="font-display-lg text-[2.75rem] leading-none font-black text-[#79bb1b] tracking-tighter">DetectX</span>
-<span class="text-[0.95rem] leading-none font-black mt-1" style="color: #0a3702;">Scan. Detect. Protect.</span>
+<span class="font-display-lg text-3xl md:text-[2.75rem] leading-none font-black text-[#79bb1b] tracking-tighter">DetectX</span>
+<span class="text-xs md:text-[0.95rem] leading-none font-black mt-1" style="color: #0a3702;">Scan. Detect. Protect.</span>
 </div>
 </a>
 <div class="hidden md:flex items-center gap-8">
-<a class="text-primary dark:text-inverse-primary font-bold border-b-2 border-primary dark:border-inverse-primary pb-1 font-label-md text-label-md" href="#home">Home</a>
-<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-md text-label-md" href="#features">Features</a>
-<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-md text-label-md" href="#about">About</a>
-<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-md text-label-md" href="#contact">Contact</a>
+<a class="text-primary dark:text-inverse-primary font-bold border-b-2 border-primary dark:border-inverse-primary pb-1 font-label-md text-sm md:text-base font-semibold" href="#home">Home</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-md text-sm md:text-base font-semibold" href="#features">Features</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-md text-sm md:text-base font-semibold" href="#about">About</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-md text-sm md:text-base font-semibold" href="#contact">Contact</a>
 </div>
-<div class="flex items-center gap-4">
-<button class="px-6 py-2 rounded-full font-label-md text-label-md bg-primary-container text-on-primary-container shadow-md hover:scale-105 active:scale-95 transition-all">Get Started</button>
+<div class="flex items-center gap-2 md:gap-4">
+<button class="px-4 py-1.5 md:px-6 md:py-2 text-sm md:text-base rounded-full font-label-md font-semibold bg-primary-container text-on-primary-container shadow-md hover:scale-105 active:scale-95 transition-all">Get Started</button>
+<button id="mobile-menu-btn" class="md:hidden p-2 text-primary focus:outline-none" onclick="toggleMobileMenu()">
+    <span class="material-symbols-outlined text-3xl">menu</span>
+</button>
 </div>
 </div>
 </nav>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 bg-surface/95 dark:bg-surface-dim/95 backdrop-blur-md z-40 flex flex-col pt-24 px-8 gap-8 transform translate-x-full transition-transform duration-300 md:hidden">
+    <a class="text-2xl font-bold text-on-surface hover:text-primary transition-colors" href="#home" onclick="toggleMobileMenu()">Home</a>
+    <a class="text-2xl font-bold text-on-surface hover:text-primary transition-colors" href="#features" onclick="toggleMobileMenu()">Features</a>
+    <a class="text-2xl font-bold text-on-surface hover:text-primary transition-colors" href="#about" onclick="toggleMobileMenu()">About</a>
+    <a class="text-2xl font-bold text-on-surface hover:text-primary transition-colors" href="#contact" onclick="toggleMobileMenu()">Contact</a>
+</div>
 <!-- Hero Section -->
 <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 flex flex-col items-center justify-center text-center px-6 overflow-hidden" id="home">
     <!-- Hero Background Image -->
@@ -185,34 +196,34 @@
 </section>
 <!-- How It Works -->
 <section class="py-stack-lg bg-surface-container-low">
-<div class="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
-<h2 class="font-display-lg text-headline-lg text-on-surface mb-4">Three Steps to Plant Wellness</h2>
-<p class="text-body-md text-on-surface-variant">Precision biology meets computer vision in seconds.</p>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center mb-16">
+<h2 class="font-display-lg text-3xl md:text-4xl font-bold text-on-surface mb-4">Three Steps to Plant Wellness</h2>
+<p class="text-base md:text-lg text-on-surface-variant">Precision biology meets computer vision in seconds.</p>
 </div>
-<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter">
 <!-- Step 1 -->
 <div class="p-8 bg-surface-container-lowest rounded-card shadow-sm border border-outline-variant/30 hover:border-primary transition-all group">
 <div class="w-16 h-16 rounded-2xl bg-secondary-container/20 text-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
 <span class="material-symbols-outlined text-3xl">upload_file</span>
 </div>
-<h3 class="font-display-lg text-headline-md mb-4">1. Upload</h3>
-<p class="text-body-md text-on-surface-variant">Take a clear photo of the affected plant leaf using your phone or upload an existing image.</p>
+<h3 class="font-display-lg text-xl md:text-2xl font-bold mb-4">1. Upload</h3>
+<p class="text-base md:text-lg text-on-surface-variant">Take a clear photo of the affected plant leaf using your phone or upload an existing image.</p>
 </div>
 <!-- Step 2 -->
 <div class="p-8 bg-surface-container-lowest rounded-card shadow-sm border border-outline-variant/30 hover:border-primary transition-all group">
 <div class="w-16 h-16 rounded-2xl bg-secondary-container/20 text-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
 <span class="material-symbols-outlined text-3xl">biotech</span>
 </div>
-<h3 class="font-display-lg text-headline-md mb-4">2. Processing</h3>
-<p class="text-body-md text-on-surface-variant">Our trained neural network analyzes the pattern, texture, and color anomalies of the leaf.</p>
+<h3 class="font-display-lg text-xl md:text-2xl font-bold mb-4">2. Processing</h3>
+<p class="text-base md:text-lg text-on-surface-variant">Our trained neural network analyzes the pattern, texture, and color anomalies of the leaf.</p>
 </div>
 <!-- Step 3 -->
 <div class="p-8 bg-surface-container-lowest rounded-card shadow-sm border border-outline-variant/30 hover:border-primary transition-all group">
 <div class="w-16 h-16 rounded-2xl bg-secondary-container/20 text-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
 <span class="material-symbols-outlined text-3xl">medical_services</span>
 </div>
-<h3 class="font-display-lg text-headline-md mb-4">3. Results</h3>
-<p class="text-body-md text-on-surface-variant">Get a specific diagnosis and a custom treatment plan to restore your plant's health.</p>
+<h3 class="font-display-lg text-xl md:text-2xl font-bold mb-4">3. Results</h3>
+<p class="text-base md:text-lg text-on-surface-variant">Get a specific diagnosis and a custom treatment plan to restore your plant's health.</p>
 </div>
 </div>
 </section>
@@ -221,19 +232,19 @@
 <div class="absolute inset-0 z-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%230d631b\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
 <div class="absolute top-0 right-0 w-96 h-96 bg-primary/15 blur-[100px] rounded-full"></div>
 <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary/15 blur-[100px] rounded-full"></div>
-<div class="max-w-4xl mx-auto px-margin-desktop relative z-10">
+<div class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
 <div class="text-center mb-12">
-<h2 class="font-display-lg text-headline-lg mb-4">Interactive Diagnostic Hub</h2>
-<p class="text-body-md text-on-surface-variant">The core of DetectX. Experience biological precision.</p>
+<h2 class="font-display-lg text-3xl md:text-4xl font-bold mb-4">Interactive Diagnostic Hub</h2>
+<p class="text-base md:text-lg text-on-surface-variant">The core of DetectX. Experience biological precision.</p>
 </div>
 <!-- State 1: Upload -->
-<div class="glass-panel p-12 rounded-card text-center border-2 border-dashed border-primary/20 hover:border-primary transition-colors cursor-pointer group" id="state-upload">
+<div class="glass-panel p-6 md:p-12 rounded-card text-center border-2 border-dashed border-primary/20 hover:border-primary transition-colors cursor-pointer group" id="state-upload">
 <div class="mb-6 flex justify-center">
 <div class="w-24 h-24 rounded-full bg-primary-container/10 flex items-center justify-center group-hover:scale-110 transition-transform">
 <span class="material-symbols-outlined text-primary text-5xl">cloud_upload</span>
 </div>
 </div>
-<h3 class="text-headline-md font-display-lg mb-2">Drag your leaf image here</h3>
+<h3 class="text-xl md:text-2xl font-bold font-display-lg mb-2">Drag your leaf image here</h3>
 <p class="text-on-surface-variant mb-4">Support for JPG, PNG up to 10MB</p>
 
 <div class="flex flex-col items-center gap-4 mb-8">
@@ -249,19 +260,19 @@
 </button>
 </div>
 <!-- State 2: Processing -->
-<div class="state-hidden glass-panel p-12 rounded-card text-center relative overflow-hidden" id="state-processing">
+<div class="state-hidden glass-panel p-6 md:p-12 rounded-card text-center relative overflow-hidden" id="state-processing">
 <div class="scanning-line absolute left-0 w-full z-20"></div>
 <div class="relative z-10">
 <div class="mb-8 w-64 h-64 mx-auto rounded-2xl overflow-hidden relative border-4 border-primary/20 shadow-inner">
 <img alt="A close-up high-resolution photograph of a green tomato leaf showing early signs of yellowing and small brown necrotic spots with concentric circles." class="w-full h-full object-cover grayscale opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJpDdRxVquL8Ry9snFW5DJHkYiM7EeKJrBfbk3R8YpCUYCwthAMcpW9AqvcL-KtbYqn3J_bynaTi_UQF-WuKo-1x424wCC1Tg0jHk-L8xsr9RFvHq97PFJLadspVsLkFxxbSEcMvQomm0uCdY3nQ9A_7igc5UVW7xMbBs7J64RRs8A4dT5FE7MRRMbG-GYu0FToiqaf5m075lqvdGo6KZxWv_7DuD0MuYdrbU4Vn6IWG5V7AP5N_OdKvFYYOwocBzmz8j68A2zD8m_"/>
 <div class="absolute inset-0 bg-primary/10 animate-pulse"></div>
 </div>
-<h3 class="text-headline-md font-display-lg mb-4">Neural Analysis in Progress...</h3>
+<h3 class="text-xl md:text-2xl font-bold font-display-lg mb-4">Neural Analysis in Progress...</h3>
 <div class="max-w-xs mx-auto">
 <div class="w-full bg-outline-variant/30 h-2 rounded-full overflow-hidden mb-2">
 <div class="h-full bg-primary w-0 transition-all duration-[3000ms] ease-out" id="progress-bar"></div>
 </div>
-<div class="flex justify-between text-caption text-on-surface-variant">
+<div class="flex justify-between text-sm text-on-surface-variant">
 <span>Extracting features...</span>
 <span id="percent-text">0%</span>
 </div>
@@ -270,19 +281,19 @@
 </div>
 <!-- State 3: Results -->
 <div class="state-hidden glass-panel rounded-card overflow-hidden shadow-2xl" id="state-results">
-<div class="p-8 bg-primary/5 border-b border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="p-4 md:p-8 bg-primary/5 border-b border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-4">
 <div class="flex items-center gap-4">
 <div class="w-12 h-12 bg-primary text-on-primary rounded-full flex items-center justify-center">
 <span class="material-symbols-outlined">check_circle</span>
 </div>
 <div>
-<h3 class="text-headline-md font-display-lg text-primary">Diagnosis Confirmed</h3>
-<p class="text-caption text-on-surface-variant">Detection Confidence: 94.2%</p>
+<h3 class="text-xl md:text-2xl font-bold font-display-lg text-primary">Diagnosis Confirmed</h3>
+<p class="text-sm text-on-surface-variant">Detection Confidence: 94.2%</p>
 </div>
 </div>
-<button class="px-6 py-2 rounded-full border border-primary text-primary font-label-md text-label-md hover:bg-primary/5 transition-all" onclick="transitionState('state-upload')">New Scan</button>
+<button class="px-6 py-2 rounded-full border border-primary text-primary font-label-md text-sm md:text-base font-semibold hover:bg-primary/5 transition-all" onclick="transitionState('state-upload')">New Scan</button>
 </div>
-<div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="p-4 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
 <div class="space-y-6">
 <div class="rounded-2xl overflow-hidden border border-outline-variant/30">
 <img alt="A macro photography view of a tomato plant leaf infected with Early Blight." class="w-full aspect-video object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLWt0ZSjB6Omaf3xoPv0MXS9cm7NnbEMgai5xxkWbl_T9Zj8ASueQPRGt2tgJuVv8xBbTldfahlw_90wkjEWsuvGsJoh0oeCzUY-X1pbJje9XB3HN-FaDABaYWbtlwpKLDCNeAkmoWE71BaziwEMsxgwJFALd0rKV7x-YiIEmtFAX1olFUi6MIFXh8NNM7fdDjSJWd1KYVJpRiB22pQ302MVSDOBFJcpi9MmVC7R173x7eAJNJuUCruXBlj0NBIjV2W0HncDOTJYkY"/>
@@ -291,19 +302,19 @@
 <div class="flex items-center gap-2 text-primary font-bold mb-1">
 <span class="material-symbols-outlined text-sm">info</span> Primary Identification
                             </div>
-<h4 class="text-headline-md font-display-lg">Tomato Early Blight</h4>
-<p class="text-caption text-on-surface-variant font-semibold">Scientific: Alternaria solani</p>
+<h4 class="text-xl md:text-2xl font-bold font-display-lg">Tomato Early Blight</h4>
+<p class="text-sm text-on-surface-variant font-semibold">Scientific: Alternaria solani</p>
 </div>
 <div class="flex flex-wrap gap-2">
-<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-caption font-bold">Fungal Infection</span>
-<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-caption font-bold">Treatable</span>
-<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-caption font-bold">Seasonal: Summer</span>
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-sm font-bold">Fungal Infection</span>
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-sm font-bold">Treatable</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-sm font-bold">Seasonal: Summer</span>
 </div>
 </div>
 <div class="space-y-8">
 <div>
 <h5 class="font-bold flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-primary">warning</span> Symptoms Observed</h5>
-<ul class="space-y-2 text-body-md text-on-surface-variant">
+<ul class="space-y-2 text-base md:text-lg text-on-surface-variant">
 <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></span> Concentric rings in leaf spots</li>
 <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></span> Yellow chlorotic halo around lesions</li>
 <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></span> Lower leaf defoliation</li>
@@ -314,11 +325,11 @@
 <div class="space-y-4">
 <div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-primary">
 <p class="font-bold text-primary mb-1">Organic Correction</p>
-<p class="text-caption">Remove infected lower leaves and apply copper-based fungicide or Neem oil solution every 7-14 days.</p>
+<p class="text-sm">Remove infected lower leaves and apply copper-based fungicide or Neem oil solution every 7-14 days.</p>
 </div>
 <div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-secondary">
 <p class="font-bold text-secondary mb-1">Cultural Practice</p>
-<p class="text-caption">Increase spacing between plants for better airflow and avoid overhead watering to keep foliage dry.</p>
+<p class="text-sm">Increase spacing between plants for better airflow and avoid overhead watering to keep foliage dry.</p>
 </div>
 </div>
 </div>
@@ -329,10 +340,10 @@
 </section>
 <!-- Why Choose -->
 <section class="py-stack-lg bg-surface" id="features">
-<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
 <div class="flex flex-col lg:flex-row gap-12 items-center">
 <div class="lg:w-1/2">
-<h2 class="font-display-lg text-headline-lg mb-6">Why trust DetectX?</h2>
+<h2 class="font-display-lg text-3xl md:text-4xl font-bold mb-6">Why trust DetectX?</h2>
 <div class="space-y-8">
 <div class="flex gap-6">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
@@ -368,8 +379,8 @@
 <img alt="LeafMedic AI dashboard on a tablet" class="w-full h-[500px] object-cover" src="assets/dashboard_new.jpg"/>
 </div>
 <div class="absolute -bottom-6 -left-6 p-6 glass-panel rounded-2xl shadow-xl">
-<div class="text-display-lg font-bold text-primary">2M+</div>
-<div class="text-label-md text-on-surface-variant uppercase tracking-widest">Plants Diagnosed</div>
+<div class="text-4xl md:text-5xl font-bold font-bold text-primary">2M+</div>
+<div class="text-sm md:text-base font-semibold text-on-surface-variant uppercase tracking-widest">Plants Diagnosed</div>
 </div>
 </div>
 </div>
@@ -378,19 +389,19 @@
 
 <!-- Supported Plants Section -->
 <section class="py-stack-lg bg-surface-container-low" id="plants">
-    <div class="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
-        <h2 class="font-display-lg text-headline-lg text-on-surface mb-4">Supported Plant Species</h2>
-        <p class="text-body-md text-on-surface-variant">Our models are trained to identify diseases across a wide variety of crops.</p>
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center mb-16">
+        <h2 class="font-display-lg text-3xl md:text-4xl font-bold text-on-surface mb-4">Supported Plant Species</h2>
+        <p class="text-base md:text-lg text-on-surface-variant">Our models are trained to identify diseases across a wide variety of crops.</p>
     </div>
     
-    <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-2 md:grid-cols-4 gap-8">
         <!-- Plant 1 -->
         <div class="flex flex-col items-center group cursor-pointer">
             <div class="w-32 h-32 rounded-full overflow-hidden mb-4 shadow-lg border-4 border-surface group-hover:border-primary transition-all">
                 <img src="https://images.unsplash.com/photo-1592841200221-a6898f307baa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Tomato" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             </div>
             <h4 class="font-bold text-lg">Tomato</h4>
-            <p class="text-caption text-on-surface-variant">10+ Diseases</p>
+            <p class="text-sm text-on-surface-variant">10+ Diseases</p>
         </div>
         <!-- Plant 2 -->
         <div class="flex flex-col items-center group cursor-pointer">
@@ -398,7 +409,7 @@
                 <img src="assets/potato.jpg" alt="Potato" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             </div>
             <h4 class="font-bold text-lg">Potato</h4>
-            <p class="text-caption text-on-surface-variant">5+ Diseases</p>
+            <p class="text-sm text-on-surface-variant">5+ Diseases</p>
         </div>
         <!-- Plant 3 -->
         <div class="flex flex-col items-center group cursor-pointer">
@@ -406,7 +417,7 @@
                 <img src="assets/apple.jpg" alt="Apple" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             </div>
             <h4 class="font-bold text-lg">Apple</h4>
-            <p class="text-caption text-on-surface-variant">8+ Diseases</p>
+            <p class="text-sm text-on-surface-variant">8+ Diseases</p>
         </div>
         <!-- Plant 4 -->
         <div class="flex flex-col items-center group cursor-pointer">
@@ -414,14 +425,14 @@
                 <img src="assets/corn.jpg" alt="Corn" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             </div>
             <h4 class="font-bold text-lg">Corn (Maize)</h4>
-            <p class="text-caption text-on-surface-variant">4+ Diseases</p>
+            <p class="text-sm text-on-surface-variant">4+ Diseases</p>
         </div>
     </div>
 </section>
 
 <!-- Footer -->
 <footer class="bg-surface-dim py-12 border-t border-outline-variant/30 mt-12">
-    <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="col-span-1 md:col-span-2">
             <div class="flex items-center gap-4 mb-6">
                 <img src="assets/DetectX.png" alt="DetectX Icon" class="h-16 w-auto object-contain">
@@ -450,7 +461,7 @@
             </ul>
         </div>
     </div>
-    <div class="max-w-container-max mx-auto px-margin-desktop mt-12 pt-8 border-t border-outline-variant/30 text-center text-caption text-on-surface-variant">
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mt-12 pt-8 border-t border-outline-variant/30 text-center text-sm text-on-surface-variant">
         &copy; 2026 DetectX. All rights reserved.
     </div>
 </footer>
@@ -475,6 +486,19 @@
                     bar.style.width = progress + '%';
                     text.innerText = Math.floor(progress) + '%';
                 }, 300);
+            }
+        }
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.querySelector('#mobile-menu-btn span');
+            if (menu.classList.contains('translate-x-full')) {
+                menu.classList.remove('translate-x-full');
+                icon.textContent = 'close';
+                document.body.classList.add('overflow-hidden');
+            } else {
+                menu.classList.add('translate-x-full');
+                icon.textContent = 'menu';
+                document.body.classList.remove('overflow-hidden');
             }
         }
     </script>
