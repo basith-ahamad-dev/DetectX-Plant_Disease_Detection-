@@ -1,272 +1,481 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LeafMedic AI - Plant Disease Detector</title>
-    <meta name="description" content="Intelligently detect plant diseases from leaf images and get actionable treatment plans.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="leaf-icon"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
-                <span>LeafMedic AI</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="#scanner-section">Detector</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#about">About</a></li>
-            </ul>
-            <a href="#scanner-section" class="btn primary nav-btn">Scan Now</a>
-            
-            <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-btn" aria-label="Toggle menu">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </button>
-        </div>
-    </nav>
 
-    <!-- Background Elements with Floating Animation -->
-    <div class="background-elements">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        
-        <!-- Animated Background Leaves -->
-        <div class="bg-leaf leaf-1">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
-        </div>
-        <div class="bg-leaf leaf-2">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
-        </div>
-        <div class="bg-leaf leaf-3">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
-        </div>
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DetectX | AI-Powered Plant Health</title>
+<link rel="icon" type="image/png" href="assets/DetectX_with_bg.jpg">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#fafaf9",
+                    "surface-tint": "#65a30d",
+                    "on-secondary-fixed-variant": "#3f6212",
+                    "tertiary-fixed-dim": "#bef264",
+                    "primary": "#65a30d",
+                    "inverse-on-surface": "#ecfccb",
+                    "on-primary-fixed-variant": "#3f6212",
+                    "inverse-primary": "#a3e635",
+                    "surface-bright": "#fafaf9",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed": "#1a2e05",
+                    "secondary-fixed-dim": "#a3e635",
+                    "secondary-fixed": "#d9f99d",
+                    "primary-container": "#d9f99d",
+                    "on-secondary-container": "#3f6212",
+                    "on-tertiary-container": "#d9f99d",
+                    "on-surface-variant": "#44403c",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#1a2e05",
+                    "on-tertiary-fixed-variant": "#3f6212",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#e7e5e4",
+                    "on-tertiary-fixed": "#1a2e05",
+                    "on-surface": "#1c1917",
+                    "tertiary": "#4d7c0f",
+                    "outline": "#78716c",
+                    "surface-variant": "#f5f5f4",
+                    "surface-container-high": "#e7e5e4",
+                    "surface": "#fafaf9",
+                    "inverse-surface": "#292524",
+                    "tertiary-fixed": "#ecfccb",
+                    "primary-fixed-dim": "#a3e635",
+                    "surface-container-low": "#f5f5f4",
+                    "surface-container-highest": "#d6d3d1",
+                    "surface-container-lowest": "#ffffff",
+                    "error": "#ba1a1a",
+                    "secondary-container": "#bef264",
+                    "tertiary-container": "#4d7c0f",
+                    "secondary": "#4d7c0f",
+                    "on-primary-container": "#3f6212",
+                    "on-error": "#ffffff",
+                    "outline-variant": "#d6d3d1",
+                    "primary-fixed": "#d9f99d",
+                    "on-background": "#1c1917",
+                    "surface-container": "#f5f5f4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "card": "24px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "stack-lg": "48px",
+                    "stack-md": "24px",
+                    "stack-sm": "12px",
+                    "unit": "8px",
+                    "margin-desktop": "40px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Manrope"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Manrope"],
+                    "headline-md": ["Manrope"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .scanning-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #2e7d32, transparent);
+            box-shadow: 0 0 15px #2e7d32;
+            animation: scan 2s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0%; opacity: 0; }
+            5% { opacity: 1; }
+            95% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .state-hidden { display: none; }
+        @keyframes fade-in-up {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-surface overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="w-full sticky top-0 z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md border-b border-white/20 dark:border-white/10 shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center w-full px-margin-desktop h-20 max-w-container-max mx-auto">
+<a href="#home" class="flex items-center gap-3 transition-transform hover:scale-105">
+<img src="assets/DetectX.png" alt="DetectX Icon" class="h-16 w-auto object-contain">
+<div class="flex flex-col justify-center">
+<span class="font-display-lg text-[2.75rem] leading-none font-black text-[#79bb1b] tracking-tighter">DetectX</span>
+<span class="text-[0.95rem] leading-none font-black mt-1" style="color: #0a3702;">Scan. Detect. Protect.</span>
+</div>
+</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary dark:text-inverse-primary font-bold border-b-2 border-primary dark:border-inverse-primary pb-1 font-label-md text-label-md" href="#home">Home</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-md text-label-md" href="#features">Features</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-md text-label-md" href="#about">About</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-md text-label-md" href="#contact">Contact</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 rounded-full font-label-md text-label-md bg-primary-container text-on-primary-container shadow-md hover:scale-105 active:scale-95 transition-all">Get Started</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-32 pb-20 md:pt-48 md:pb-32 flex flex-col items-center justify-center text-center px-6 overflow-hidden" id="home">
+    <!-- Hero Background Image -->
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-surface/85 backdrop-blur-[2px] z-10"></div>
+        <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover opacity-60" alt="Beautiful green leaves background">
     </div>
     
-    <main>
-        <!-- Scanner Section (Hero) -->
-        <section id="scanner-section" class="landing-section pt-navbar">
-            <div class="app-container reveal">
-                <header class="app-header">
-                    <h1 class="hero-title">Diagnose Plant Diseases <span class="highlight">Instantly</span></h1>
-                    <p class="tagline">Upload a picture of a leaf and let our AI model identify the disease and recommend the best eco-friendly treatment.</p>
-                </header>
-
-                <div id="main-content" class="glass-card">
-                    <!-- STATE 1: UPLOAD -->
-                    <section id="upload-state" class="state-section active">
-                        <div class="upload-zone" id="drop-zone">
-                            <input type="file" id="file-input" accept="image/*" hidden>
-                            
-                            <div id="upload-prompt" class="upload-content">
-                                <div class="icon-wrapper bounce-anim">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                </div>
-                                <h3>Upload Leaf Image</h3>
-                                <p>Drag and drop your image here</p>
-                                <span class="divider">or</span>
-                                <button id="browse-btn" class="btn secondary">Browse Files</button>
-                            </div>
-
-                            <div id="preview-container" class="preview-content hidden">
-                                <div class="img-wrapper">
-                                    <img id="image-preview-upload" src="" alt="Selected leaf preview">
-                                    <button id="remove-img-btn" class="icon-btn remove-btn" aria-label="Remove image">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="action-footer">
-                            <button id="analyze-btn" class="btn primary pulse-btn" disabled>
-                                <span>Analyze Image</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </button>
-                        </div>
-                    </section>
-
-                    <!-- STATE 2: PROCESSING -->
-                    <section id="processing-state" class="state-section hidden">
-                        <div class="processing-container">
-                            <div class="scanner-wrapper">
-                                <img id="image-preview-processing" src="" alt="Scanning leaf">
-                                <div class="scanner-overlay">
-                                    <div class="scanner-line"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="loading-indicator">
-                                <div class="spinner">
-                                    <svg viewBox="0 0 50 50">
-                                        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
-                                    </svg>
-                                </div>
-                                <h3 class="processing-title">Analyzing leaf patterns...</h3>
-                                <p class="processing-subtitle">Identifying potential anomalies using AI</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- STATE 3: RESULTS -->
-                    <section id="results-state" class="state-section hidden">
-                        <div class="results-layout">
-                            <div class="results-visual">
-                                <div class="result-img-wrapper">
-                                    <img id="image-preview-results" src="" alt="Analyzed leaf">
-                                    <div class="scan-overlay-complete"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="results-details">
-                                <div class="diagnosis-header">
-                                    <h2 class="section-label">Diagnosis</h2>
-                                    <div class="diagnosis-badges">
-                                        <span class="badge disease-name" id="result-disease">Tomato Early Blight</span>
-                                        <span class="badge confidence" id="result-confidence">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                                            94% Match
-                                        </span>
-                                    </div>
-                                </div>
-                                
-                                <div class="explanation-section">
-                                    <div class="info-card fade-in" style="animation-delay: 0.1s;">
-                                        <div class="info-header">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                                            <h3>Cause & Symptoms</h3>
-                                        </div>
-                                        <p id="result-cause">Caused by the fungus <em>Alternaria solani</em>. Symptoms include small black or brown spots, usually beginning on older leaves.</p>
-                                    </div>
-                                    
-                                    <div class="info-card treatment fade-in" style="animation-delay: 0.3s;">
-                                        <div class="info-header">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                                            <h3>Recommended Treatment</h3>
-                                        </div>
-                                        <ul id="result-treatment" class="treatment-list">
-                                            <li>Prune and destroy infected lower leaves.</li>
-                                            <li>Apply copper-based fungicides immediately.</li>
-                                            <li>Improve air circulation by spacing plants.</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-                                <div class="action-footer results-footer fade-in" style="animation-delay: 0.5s;">
-                                    <button id="reset-btn" class="btn secondary outline">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-                                        Scan Another Plant
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </section>
-
-        <!-- How It Works Section -->
-        <section id="how-it-works" class="landing-section alt-bg">
-            <div class="section-container">
-                <div class="section-header reveal">
-                    <h2>How It Works</h2>
-                    <p>Protect your plants in three simple steps.</p>
-                </div>
-                <div class="steps-grid">
-                    <div class="step-card reveal">
-                        <div class="step-img-container">
-                             <img src="https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?auto=format&fit=crop&q=80&w=400&h=300" alt="Take a picture of a leaf">
-                             <div class="step-badge">1</div>
-                        </div>
-                        <div class="step-content">
-                            <h3>Upload Image</h3>
-                            <p>Snap a clear, well-lit photo of the affected plant leaf. Focus on the area with visible spots, discoloration, or damage.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="step-card reveal" style="transition-delay: 0.15s">
-                        <div class="step-img-container">
-                             <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400&h=300" alt="AI processing data">
-                             <div class="step-badge">2</div>
-                        </div>
-                        <div class="step-content">
-                            <h3>AI Analysis</h3>
-                            <p>Our deep learning vision model analyzes the leaf's patterns, comparing it against a vast database of known plant pathogens.</p>
-                        </div>
-                    </div>
-
-                    <div class="step-card reveal" style="transition-delay: 0.3s">
-                        <div class="step-img-container">
-                             <img src="https://images.unsplash.com/photo-1416879598555-220b8bf9736c?auto=format&fit=crop&q=80&w=400&h=300" alt="Healthy plant treatment">
-                             <div class="step-badge">3</div>
-                        </div>
-                        <div class="step-content">
-                            <h3>Get Treatment</h3>
-                            <p>Receive a high-confidence diagnosis instantly, complete with actionable, eco-friendly treatment plans and remedies.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="landing-section">
-            <div class="section-container about-grid">
-                <div class="about-text reveal">
-                    <div class="badge-small">Our Mission</div>
-                    <h2>Empowering Growers with Artificial Intelligence</h2>
-                    <p>LeafMedic AI was built to help farmers, gardeners, and plant enthusiasts protect their crops and houseplants from devastating diseases before they spread.</p>
-                    <p>By leveraging state-of-the-art computer vision models trained on thousands of plant images, we bring expert-level agronomy right to your fingertips. Whether it's early blight on your tomatoes or rust on your roses, we've got you covered.</p>
-                    
-                    <ul class="feature-list">
-                        <li>
-                            <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                            <span>Over 95% detection accuracy</span>
-                        </li>
-                        <li>
-                            <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                            <span>Supports 30+ crop and plant species</span>
-                        </li>
-                        <li>
-                            <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                            <span>Provides safe & organic remedy options</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="about-image-wrapper reveal" style="transition-delay: 0.2s">
-                    <img class="main-about-img" src="https://images.unsplash.com/photo-1530836369250-ef71a3f5e48c?auto=format&fit=crop&q=80&w=600&h=700" alt="Farmer in greenhouse">
-                    <div class="floating-stat float-anim">
-                        <div class="stat-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                        </div>
-                        <div class="stat-text">
-                            <h4>30,000+</h4>
-                            <p>Scans Completed</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="app-footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="leaf-icon"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
-                    <span>LeafMedic AI</span>
-                </div>
-                <p>&copy; 2026 LeafMedic AI. Building a greener, healthier future.</p>
-            </div>
+    <!-- Decorative background glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 blur-[100px] rounded-full pointer-events-none z-10"></div>
+    
+    <div class="space-y-6 max-w-4xl mx-auto animate-fade-in-up relative z-20">
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-2">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">eco</span> AI Plant Doctor
+        </span>
+        
+        <h1 class="font-display-lg text-4xl md:text-6xl lg:text-7xl font-extrabold text-on-surface leading-tight tracking-tight">
+            Identify Plant Diseases in <span class="text-primary">Seconds</span>
+        </h1>
+        
+        <p class="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto pt-2">
+            Upload a photo of your plant's leaf and let our AI instantly diagnose the issue, providing organic and practical treatment plans to restore its health.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-8">
+            <a class="w-full sm:w-auto px-8 py-4 bg-primary text-on-primary rounded-full font-bold shadow-lg hover:bg-primary-container hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2" href="#detector">
+                Scan Your Plant <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+            <a class="w-full sm:w-auto px-8 py-4 bg-surface text-on-surface border border-outline/30 rounded-full font-bold hover:bg-surface-container hover:border-primary/50 transition-all flex items-center justify-center" href="#features">
+                Learn More
+            </a>
         </div>
-    </footer>
+    </div>
+</section>
+<!-- How It Works -->
+<section class="py-stack-lg bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
+<h2 class="font-display-lg text-headline-lg text-on-surface mb-4">Three Steps to Plant Wellness</h2>
+<p class="text-body-md text-on-surface-variant">Precision biology meets computer vision in seconds.</p>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Step 1 -->
+<div class="p-8 bg-surface-container-lowest rounded-card shadow-sm border border-outline-variant/30 hover:border-primary transition-all group">
+<div class="w-16 h-16 rounded-2xl bg-secondary-container/20 text-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">upload_file</span>
+</div>
+<h3 class="font-display-lg text-headline-md mb-4">1. Upload</h3>
+<p class="text-body-md text-on-surface-variant">Take a clear photo of the affected plant leaf using your phone or upload an existing image.</p>
+</div>
+<!-- Step 2 -->
+<div class="p-8 bg-surface-container-lowest rounded-card shadow-sm border border-outline-variant/30 hover:border-primary transition-all group">
+<div class="w-16 h-16 rounded-2xl bg-secondary-container/20 text-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">biotech</span>
+</div>
+<h3 class="font-display-lg text-headline-md mb-4">2. Processing</h3>
+<p class="text-body-md text-on-surface-variant">Our trained neural network analyzes the pattern, texture, and color anomalies of the leaf.</p>
+</div>
+<!-- Step 3 -->
+<div class="p-8 bg-surface-container-lowest rounded-card shadow-sm border border-outline-variant/30 hover:border-primary transition-all group">
+<div class="w-16 h-16 rounded-2xl bg-secondary-container/20 text-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">medical_services</span>
+</div>
+<h3 class="font-display-lg text-headline-md mb-4">3. Results</h3>
+<p class="text-body-md text-on-surface-variant">Get a specific diagnosis and a custom treatment plan to restore your plant's health.</p>
+</div>
+</div>
+</section>
+<!-- Interactive Detector -->
+<section class="py-stack-lg relative overflow-hidden bg-surface-container" id="detector">
+<div class="absolute inset-0 z-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%230d631b\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary/15 blur-[100px] rounded-full"></div>
+<div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary/15 blur-[100px] rounded-full"></div>
+<div class="max-w-4xl mx-auto px-margin-desktop relative z-10">
+<div class="text-center mb-12">
+<h2 class="font-display-lg text-headline-lg mb-4">Interactive Diagnostic Hub</h2>
+<p class="text-body-md text-on-surface-variant">The core of DetectX. Experience biological precision.</p>
+</div>
+<!-- State 1: Upload -->
+<div class="glass-panel p-12 rounded-card text-center border-2 border-dashed border-primary/20 hover:border-primary transition-colors cursor-pointer group" id="state-upload">
+<div class="mb-6 flex justify-center">
+<div class="w-24 h-24 rounded-full bg-primary-container/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-5xl">cloud_upload</span>
+</div>
+</div>
+<h3 class="text-headline-md font-display-lg mb-2">Drag your leaf image here</h3>
+<p class="text-on-surface-variant mb-4">Support for JPG, PNG up to 10MB</p>
 
-    <script src="app.js"></script>
-</body>
-</html>
+<div class="flex flex-col items-center gap-4 mb-8">
+    <span class="text-on-surface-variant uppercase text-sm font-bold tracking-wider">OR</span>
+    <label class="px-8 py-3 border-2 border-primary text-primary rounded-full font-bold cursor-pointer hover:bg-primary/5 transition-all">
+        Browse Files
+        <input type="file" accept="image/*" class="hidden" onchange="document.getElementById('analyze-btn').classList.remove('opacity-50', 'pointer-events-none'); document.getElementById('analyze-btn').removeAttribute('disabled');">
+    </label>
+</div>
+
+<button id="analyze-btn" disabled class="px-10 py-4 bg-primary text-on-primary rounded-full font-bold shadow-xl hover:bg-primary-container transition-all opacity-50 pointer-events-none" onclick="transitionState('state-processing')">
+    Analyze Image
+</button>
+</div>
+<!-- State 2: Processing -->
+<div class="state-hidden glass-panel p-12 rounded-card text-center relative overflow-hidden" id="state-processing">
+<div class="scanning-line absolute left-0 w-full z-20"></div>
+<div class="relative z-10">
+<div class="mb-8 w-64 h-64 mx-auto rounded-2xl overflow-hidden relative border-4 border-primary/20 shadow-inner">
+<img alt="A close-up high-resolution photograph of a green tomato leaf showing early signs of yellowing and small brown necrotic spots with concentric circles." class="w-full h-full object-cover grayscale opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJpDdRxVquL8Ry9snFW5DJHkYiM7EeKJrBfbk3R8YpCUYCwthAMcpW9AqvcL-KtbYqn3J_bynaTi_UQF-WuKo-1x424wCC1Tg0jHk-L8xsr9RFvHq97PFJLadspVsLkFxxbSEcMvQomm0uCdY3nQ9A_7igc5UVW7xMbBs7J64RRs8A4dT5FE7MRRMbG-GYu0FToiqaf5m075lqvdGo6KZxWv_7DuD0MuYdrbU4Vn6IWG5V7AP5N_OdKvFYYOwocBzmz8j68A2zD8m_"/>
+<div class="absolute inset-0 bg-primary/10 animate-pulse"></div>
+</div>
+<h3 class="text-headline-md font-display-lg mb-4">Neural Analysis in Progress...</h3>
+<div class="max-w-xs mx-auto">
+<div class="w-full bg-outline-variant/30 h-2 rounded-full overflow-hidden mb-2">
+<div class="h-full bg-primary w-0 transition-all duration-[3000ms] ease-out" id="progress-bar"></div>
+</div>
+<div class="flex justify-between text-caption text-on-surface-variant">
+<span>Extracting features...</span>
+<span id="percent-text">0%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- State 3: Results -->
+<div class="state-hidden glass-panel rounded-card overflow-hidden shadow-2xl" id="state-results">
+<div class="p-8 bg-primary/5 border-b border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary text-on-primary rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div>
+<h3 class="text-headline-md font-display-lg text-primary">Diagnosis Confirmed</h3>
+<p class="text-caption text-on-surface-variant">Detection Confidence: 94.2%</p>
+</div>
+</div>
+<button class="px-6 py-2 rounded-full border border-primary text-primary font-label-md text-label-md hover:bg-primary/5 transition-all" onclick="transitionState('state-upload')">New Scan</button>
+</div>
+<div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="space-y-6">
+<div class="rounded-2xl overflow-hidden border border-outline-variant/30">
+<img alt="A macro photography view of a tomato plant leaf infected with Early Blight." class="w-full aspect-video object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLWt0ZSjB6Omaf3xoPv0MXS9cm7NnbEMgai5xxkWbl_T9Zj8ASueQPRGt2tgJuVv8xBbTldfahlw_90wkjEWsuvGsJoh0oeCzUY-X1pbJje9XB3HN-FaDABaYWbtlwpKLDCNeAkmoWE71BaziwEMsxgwJFALd0rKV7x-YiIEmtFAX1olFUi6MIFXh8NNM7fdDjSJWd1KYVJpRiB22pQ302MVSDOBFJcpi9MmVC7R173x7eAJNJuUCruXBlj0NBIjV2W0HncDOTJYkY"/>
+</div>
+<div>
+<div class="flex items-center gap-2 text-primary font-bold mb-1">
+<span class="material-symbols-outlined text-sm">info</span> Primary Identification
+                            </div>
+<h4 class="text-headline-md font-display-lg">Tomato Early Blight</h4>
+<p class="text-caption text-on-surface-variant font-semibold">Scientific: Alternaria solani</p>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-caption font-bold">Fungal Infection</span>
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-caption font-bold">Treatable</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-caption font-bold">Seasonal: Summer</span>
+</div>
+</div>
+<div class="space-y-8">
+<div>
+<h5 class="font-bold flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-primary">warning</span> Symptoms Observed</h5>
+<ul class="space-y-2 text-body-md text-on-surface-variant">
+<li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></span> Concentric rings in leaf spots</li>
+<li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></span> Yellow chlorotic halo around lesions</li>
+<li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></span> Lower leaf defoliation</li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-primary">healing</span> Treatment Plan</h5>
+<div class="space-y-4">
+<div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-primary">
+<p class="font-bold text-primary mb-1">Organic Correction</p>
+<p class="text-caption">Remove infected lower leaves and apply copper-based fungicide or Neem oil solution every 7-14 days.</p>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-secondary">
+<p class="font-bold text-secondary mb-1">Cultural Practice</p>
+<p class="text-caption">Increase spacing between plants for better airflow and avoid overhead watering to keep foliage dry.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Choose -->
+<section class="py-stack-lg bg-surface" id="features">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="flex flex-col lg:flex-row gap-12 items-center">
+<div class="lg:w-1/2">
+<h2 class="font-display-lg text-headline-lg mb-6">Why trust DetectX?</h2>
+<div class="space-y-8">
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">database</span>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-1">Massive Biological Dataset</h4>
+<p class="text-on-surface-variant">Trained on over 2.5 million verified botanical samples and pathological cases from across the globe.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-1">Instant Response Loop</h4>
+<p class="text-on-surface-variant">Real-time processing on edge servers ensures you get diagnosis in less than 3 seconds.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">groups</span>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-1">Expert Verified</h4>
+<p class="text-on-surface-variant">Algorithms are cross-validated by leading agronomists and plant pathologists.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:w-1/2 relative">
+<div class="rounded-card overflow-hidden shadow-2xl rotate-3 transform hover:rotate-0 transition-transform duration-500 border-4 border-white/60">
+<img alt="LeafMedic AI dashboard on a tablet" class="w-full h-[500px] object-cover" src="assets/dashboard_new.jpg"/>
+</div>
+<div class="absolute -bottom-6 -left-6 p-6 glass-panel rounded-2xl shadow-xl">
+<div class="text-display-lg font-bold text-primary">2M+</div>
+<div class="text-label-md text-on-surface-variant uppercase tracking-widest">Plants Diagnosed</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Supported Plants Section -->
+<section class="py-stack-lg bg-surface-container-low" id="plants">
+    <div class="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
+        <h2 class="font-display-lg text-headline-lg text-on-surface mb-4">Supported Plant Species</h2>
+        <p class="text-body-md text-on-surface-variant">Our models are trained to identify diseases across a wide variety of crops.</p>
+    </div>
+    
+    <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-2 md:grid-cols-4 gap-8">
+        <!-- Plant 1 -->
+        <div class="flex flex-col items-center group cursor-pointer">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-4 shadow-lg border-4 border-surface group-hover:border-primary transition-all">
+                <img src="https://images.unsplash.com/photo-1592841200221-a6898f307baa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Tomato" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <h4 class="font-bold text-lg">Tomato</h4>
+            <p class="text-caption text-on-surface-variant">10+ Diseases</p>
+        </div>
+        <!-- Plant 2 -->
+        <div class="flex flex-col items-center group cursor-pointer">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-4 shadow-lg border-4 border-surface group-hover:border-primary transition-all">
+                <img src="assets/potato.jpg" alt="Potato" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <h4 class="font-bold text-lg">Potato</h4>
+            <p class="text-caption text-on-surface-variant">5+ Diseases</p>
+        </div>
+        <!-- Plant 3 -->
+        <div class="flex flex-col items-center group cursor-pointer">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-4 shadow-lg border-4 border-surface group-hover:border-primary transition-all">
+                <img src="assets/apple.jpg" alt="Apple" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <h4 class="font-bold text-lg">Apple</h4>
+            <p class="text-caption text-on-surface-variant">8+ Diseases</p>
+        </div>
+        <!-- Plant 4 -->
+        <div class="flex flex-col items-center group cursor-pointer">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-4 shadow-lg border-4 border-surface group-hover:border-primary transition-all">
+                <img src="assets/corn.jpg" alt="Corn" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <h4 class="font-bold text-lg">Corn (Maize)</h4>
+            <p class="text-caption text-on-surface-variant">4+ Diseases</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-surface-dim py-12 border-t border-outline-variant/30 mt-12">
+    <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="col-span-1 md:col-span-2">
+            <div class="flex items-center gap-4 mb-6">
+                <img src="assets/DetectX.png" alt="DetectX Icon" class="h-16 w-auto object-contain">
+                <div class="flex flex-col items-start justify-center">
+                    <span class="font-display-lg text-4xl leading-none font-black text-[#79bb1b] tracking-tighter">DetectX</span>
+                    <span class="text-sm leading-none font-black mt-1" style="color: #0a3702;">Scan. Detect. Protect.</span>
+                </div>
+            </div>
+            <p class="text-on-surface-variant text-sm max-w-sm mb-6">Empowering gardeners, farmers, and agronomists with AI-driven plant health diagnostics. Protect your crops with the power of computer vision.</p>
+        </div>
+        <div>
+            <h4 class="font-bold mb-4">Quick Links</h4>
+            <ul class="space-y-2 text-sm text-on-surface-variant">
+                <li><a href="#home" class="hover:text-primary transition-colors">Home</a></li>
+                <li><a href="#detector" class="hover:text-primary transition-colors">Diagnostic Hub</a></li>
+                <li><a href="#features" class="hover:text-primary transition-colors">Features</a></li>
+                <li><a href="#plants" class="hover:text-primary transition-colors">Supported Plants</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-bold mb-4">Legal</h4>
+            <ul class="space-y-2 text-sm text-on-surface-variant">
+                <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                <li><a href="#" class="hover:text-primary transition-colors">Terms of Service</a></li>
+                <li><a href="#" class="hover:text-primary transition-colors">Disclaimer</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="max-w-container-max mx-auto px-margin-desktop mt-12 pt-8 border-t border-outline-variant/30 text-center text-caption text-on-surface-variant">
+        &copy; 2026 DetectX. All rights reserved.
+    </div>
+</footer>
+
+<script>
+        function transitionState(targetId) {
+            document.querySelectorAll('[id^="state-"]').forEach(el => el.classList.add('state-hidden'));
+            const target = document.getElementById(targetId);
+            target.classList.remove('state-hidden');
+            
+            if (targetId === 'state-processing') {
+                const bar = document.getElementById('progress-bar');
+                const text = document.getElementById('percent-text');
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 15;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                        setTimeout(() => transitionState('state-results'), 500);
+                    }
+                    bar.style.width = progress + '%';
+                    text.innerText = Math.floor(progress) + '%';
+                }, 300);
+            }
+        }
+    </script>
+</body></html>
