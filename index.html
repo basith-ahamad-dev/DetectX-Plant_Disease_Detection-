@@ -478,7 +478,6 @@
     </div>
 </footer>
 
-<script src="disease_data.js"></script>
 <script>
         let currentUploadedFile = null;
 
@@ -634,7 +633,13 @@
                     bar.style.width = '100%';
                     text.innerText = '100%';
                     
-                    const pred = getPredictionFromIndex(result.class_index, result.confidence);
+                    // Backend now provides the exact MySQL database row!
+                    const pred = {
+                        category: result.disease_info.category,
+                        disease: result.disease_info.disease,
+                        data: result.disease_info,
+                        confidence: result.confidence
+                    };
                     
                     setTimeout(() => {
                         populateResultsUI(pred);
@@ -644,15 +649,11 @@
                 } catch (error) {
                     console.error("Prediction failed:", error);
                     clearInterval(interval);
-                    alert("Failed to analyze image. Falling back to demo mode.");
+                    alert("Failed to analyze image. Ensure the Python backend and MySQL are running.");
                     
-                    // Fallback to random prediction for demo purposes if backend fails
+                    // Fallback to error UI (or simple static demo) if backend fails
                     bar.style.width = '100%';
-                    text.innerText = '100%';
-                    setTimeout(() => {
-                        populateResultsUI(getRandomPrediction());
-                        transitionState('state-results');
-                    }, 500);
+                    text.innerText = 'Error';
                 }
             }
         }

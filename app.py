@@ -4,14 +4,49 @@ import tensorflow as tf
 from PIL import Image
 import numpy as np
 import io
+import mysql.connector
+import json
 
 app = Flask(__name__, static_url_path='', static_folder='.')
+
+# Database configuration
+DB_CONFIG = {
+    'user': 'root',
+    'password': '',
+    'host': 'localhost',
+    'database': 'plant_disease_db'
+}
 
 # Load model
 model_path = os.path.join('model', 'Plant_Disease_Classification.keras')
 print(f"Loading model from {model_path}...")
 model = tf.keras.models.load_model(model_path)
 print("Model loaded successfully.")
+
+def get_disease_info(class_index):
+    try:
+        cnx = mysql.connector.connect(**DB_CONFIG)
+        cursor = cnx.cursor(dictionary=True)
+        query = "SELECT * FROM diseases_info WHERE model_class_index = %s"
+        cursor.execute(query, (class_index,))
+        result = cursor.fetchone()
+        cursor.close()
+        cnx.close()
+        
+        if result:
+            # Parse JSON text back into lists so it perfectly matches the frontend format
+            result['tags'] = json.loads(result['tags']) if result['tags'] else []
+            result['symptoms'] = json.loads(result['symptoms']) if result['symptoms'] else []
+            result['treatments'] = json.loads(result['treatments']) if result['treatments'] else []
+            
+            # The frontend expects 'subtitle' for the scientific name
+            result['subtitle'] = result.get('scientific_name', '')
+            
+            return result
+        return None
+    except Exception as e:
+        print(f"Database error: {e}")
+        return None
 
 @app.route('/')
 def index():
@@ -40,7 +75,6 @@ def predict():
         img_array = np.array(img)
         
         # Preprocess using MobileNetV2 standards
-        # (This scales pixels to [-1, 1] as required by standard MobileNetV2)
         img_array = tf.keras.applications.mobilenet_v2.preprocess_input(img_array)
         
         # Add batch dimension
@@ -48,12 +82,16 @@ def predict():
         
         # Predict
         predictions = model.predict(img_array)
-        class_index = np.argmax(predictions[0])
+        class_index = int(np.argmax(predictions[0]))
         confidence = float(predictions[0][class_index])
         
+        # Fetch disease details from MySQL
+        disease_data = get_disease_info(class_index)
+        
         return jsonify({
-            'class_index': int(class_index),
-            'confidence': round(confidence * 100, 2)
+            'class_index': class_index,
+            'confidence': round(confidence * 100, 2),
+            'disease_info': disease_data
         })
         
     except Exception as e:
