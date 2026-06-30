@@ -238,7 +238,8 @@
 <p class="text-base md:text-lg text-on-surface-variant">The core of DetectX. Experience biological precision.</p>
 </div>
 <!-- State 1: Upload -->
-<div class="glass-panel p-6 md:p-12 rounded-card text-center border-2 border-dashed border-primary/20 hover:border-primary transition-colors cursor-pointer group" id="state-upload">
+<div class="glass-panel p-6 md:p-12 rounded-card text-center border-2 border-dashed border-primary/20 hover:border-primary transition-colors cursor-pointer group" id="state-upload" ondragover="event.preventDefault(); this.classList.add('border-primary', 'bg-primary/5')" ondragleave="event.preventDefault(); this.classList.remove('border-primary', 'bg-primary/5')" ondrop="event.preventDefault(); this.classList.remove('border-primary', 'bg-primary/5'); handleDrop(event)">
+<div id="upload-prompt">
 <div class="mb-6 flex justify-center">
 <div class="w-24 h-24 rounded-full bg-primary-container/10 flex items-center justify-center group-hover:scale-110 transition-transform">
 <span class="material-symbols-outlined text-primary text-5xl">cloud_upload</span>
@@ -251,8 +252,19 @@
     <span class="text-on-surface-variant uppercase text-sm font-bold tracking-wider">OR</span>
     <label class="px-8 py-3 border-2 border-primary text-primary rounded-full font-bold cursor-pointer hover:bg-primary/5 transition-all">
         Browse Files
-        <input type="file" accept="image/*" class="hidden" onchange="document.getElementById('analyze-btn').classList.remove('opacity-50', 'pointer-events-none'); document.getElementById('analyze-btn').removeAttribute('disabled');">
+        <input type="file" id="file-input" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
     </label>
+</div>
+</div>
+
+<div id="image-preview-container" class="hidden flex flex-col items-center mb-8">
+    <div class="relative w-48 h-48 rounded-xl overflow-hidden border-2 border-primary/20 shadow-md mb-4 group/preview">
+        <img id="image-preview" src="" alt="Image preview" class="w-full h-full object-cover">
+        <button onclick="resetUpload(event)" class="absolute top-2 right-2 bg-surface/80 p-1 rounded-full text-on-surface hover:text-error hover:bg-error-container transition-colors backdrop-blur-sm shadow-sm" title="Remove image">
+            <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+    </div>
+    <p id="file-name" class="text-sm font-semibold text-on-surface-variant truncate max-w-xs"></p>
 </div>
 
 <button id="analyze-btn" disabled class="px-10 py-4 bg-primary text-on-primary rounded-full font-bold shadow-xl hover:bg-primary-container transition-all opacity-50 pointer-events-none" onclick="transitionState('state-processing')">
@@ -264,7 +276,7 @@
 <div class="scanning-line absolute left-0 w-full z-20"></div>
 <div class="relative z-10">
 <div class="mb-8 w-64 h-64 mx-auto rounded-2xl overflow-hidden relative border-4 border-primary/20 shadow-inner">
-<img alt="A close-up high-resolution photograph of a green tomato leaf showing early signs of yellowing and small brown necrotic spots with concentric circles." class="w-full h-full object-cover grayscale opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJpDdRxVquL8Ry9snFW5DJHkYiM7EeKJrBfbk3R8YpCUYCwthAMcpW9AqvcL-KtbYqn3J_bynaTi_UQF-WuKo-1x424wCC1Tg0jHk-L8xsr9RFvHq97PFJLadspVsLkFxxbSEcMvQomm0uCdY3nQ9A_7igc5UVW7xMbBs7J64RRs8A4dT5FE7MRRMbG-GYu0FToiqaf5m075lqvdGo6KZxWv_7DuD0MuYdrbU4Vn6IWG5V7AP5N_OdKvFYYOwocBzmz8j68A2zD8m_"/>
+<img id="processing-image" alt="A close-up high-resolution photograph of a green tomato leaf showing early signs of yellowing and small brown necrotic spots with concentric circles." class="w-full h-full object-cover grayscale opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJpDdRxVquL8Ry9snFW5DJHkYiM7EeKJrBfbk3R8YpCUYCwthAMcpW9AqvcL-KtbYqn3J_bynaTi_UQF-WuKo-1x424wCC1Tg0jHk-L8xsr9RFvHq97PFJLadspVsLkFxxbSEcMvQomm0uCdY3nQ9A_7igc5UVW7xMbBs7J64RRs8A4dT5FE7MRRMbG-GYu0FToiqaf5m075lqvdGo6KZxWv_7DuD0MuYdrbU4Vn6IWG5V7AP5N_OdKvFYYOwocBzmz8j68A2zD8m_"/>
 <div class="absolute inset-0 bg-primary/10 animate-pulse"></div>
 </div>
 <h3 class="text-xl md:text-2xl font-bold font-display-lg mb-4">Neural Analysis in Progress...</h3>
@@ -283,29 +295,29 @@
 <div class="state-hidden glass-panel rounded-card overflow-hidden shadow-2xl" id="state-results">
 <div class="p-4 md:p-8 bg-primary/5 border-b border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-4">
 <div class="flex items-center gap-4">
-<div class="w-12 h-12 bg-primary text-on-primary rounded-full flex items-center justify-center">
-<span class="material-symbols-outlined">check_circle</span>
+<div class="w-12 h-12 bg-primary text-on-primary rounded-full flex items-center justify-center" id="result-icon-bg">
+<span class="material-symbols-outlined" id="result-icon">check_circle</span>
 </div>
 <div>
-<h3 class="text-xl md:text-2xl font-bold font-display-lg text-primary">Diagnosis Confirmed</h3>
-<p class="text-sm text-on-surface-variant">Detection Confidence: 94.2%</p>
+<h3 class="text-xl md:text-2xl font-bold font-display-lg text-primary" id="result-header">Diagnosis Confirmed</h3>
+<p class="text-sm text-on-surface-variant" id="result-confidence">Detection Confidence: 94.2%</p>
 </div>
 </div>
-<button class="px-6 py-2 rounded-full border border-primary text-primary font-label-md text-sm md:text-base font-semibold hover:bg-primary/5 transition-all" onclick="transitionState('state-upload')">New Scan</button>
+<button class="px-6 py-2 rounded-full border border-primary text-primary font-label-md text-sm md:text-base font-semibold hover:bg-primary/5 transition-all" onclick="resetUpload(event); transitionState('state-upload')">New Scan</button>
 </div>
 <div class="p-4 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
 <div class="space-y-6">
 <div class="rounded-2xl overflow-hidden border border-outline-variant/30">
-<img alt="A macro photography view of a tomato plant leaf infected with Early Blight." class="w-full aspect-video object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLWt0ZSjB6Omaf3xoPv0MXS9cm7NnbEMgai5xxkWbl_T9Zj8ASueQPRGt2tgJuVv8xBbTldfahlw_90wkjEWsuvGsJoh0oeCzUY-X1pbJje9XB3HN-FaDABaYWbtlwpKLDCNeAkmoWE71BaziwEMsxgwJFALd0rKV7x-YiIEmtFAX1olFUi6MIFXh8NNM7fdDjSJWd1KYVJpRiB22pQ302MVSDOBFJcpi9MmVC7R173x7eAJNJuUCruXBlj0NBIjV2W0HncDOTJYkY"/>
+<img id="results-image" alt="A macro photography view of a tomato plant leaf infected with Early Blight." class="w-full aspect-video object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLWt0ZSjB6Omaf3xoPv0MXS9cm7NnbEMgai5xxkWbl_T9Zj8ASueQPRGt2tgJuVv8xBbTldfahlw_90wkjEWsuvGsJoh0oeCzUY-X1pbJje9XB3HN-FaDABaYWbtlwpKLDCNeAkmoWE71BaziwEMsxgwJFALd0rKV7x-YiIEmtFAX1olFUi6MIFXh8NNM7fdDjSJWd1KYVJpRiB22pQ302MVSDOBFJcpi9MmVC7R173x7eAJNJuUCruXBlj0NBIjV2W0HncDOTJYkY"/>
 </div>
 <div>
 <div class="flex items-center gap-2 text-primary font-bold mb-1">
-<span class="material-symbols-outlined text-sm">info</span> Primary Identification
+<span class="material-symbols-outlined text-sm">info</span> <span id="result-category">Primary Identification</span>
                             </div>
-<h4 class="text-xl md:text-2xl font-bold font-display-lg">Tomato Early Blight</h4>
-<p class="text-sm text-on-surface-variant font-semibold">Scientific: Alternaria solani</p>
+<h4 class="text-xl md:text-2xl font-bold font-display-lg" id="result-title">Tomato Early Blight</h4>
+<p class="text-sm text-on-surface-variant font-semibold" id="result-subtitle">Scientific: Alternaria solani</p>
 </div>
-<div class="flex flex-wrap gap-2">
+<div class="flex flex-wrap gap-2" id="result-tags">
 <span class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-sm font-bold">Fungal Infection</span>
 <span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-sm font-bold">Treatable</span>
 <span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-sm font-bold">Seasonal: Summer</span>
@@ -314,7 +326,7 @@
 <div class="space-y-8">
 <div>
 <h5 class="font-bold flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-primary">warning</span> Symptoms Observed</h5>
-<ul class="space-y-2 text-base md:text-lg text-on-surface-variant">
+<ul class="space-y-2 text-base md:text-lg text-on-surface-variant" id="result-symptoms">
 <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></span> Concentric rings in leaf spots</li>
 <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></span> Yellow chlorotic halo around lesions</li>
 <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></span> Lower leaf defoliation</li>
@@ -322,7 +334,7 @@
 </div>
 <div>
 <h5 class="font-bold flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-primary">healing</span> Treatment Plan</h5>
-<div class="space-y-4">
+<div class="space-y-4" id="result-treatments">
 <div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-primary">
 <p class="font-bold text-primary mb-1">Organic Correction</p>
 <p class="text-sm">Remove infected lower leaves and apply copper-based fungicide or Neem oil solution every 7-14 days.</p>
@@ -466,7 +478,121 @@
     </div>
 </footer>
 
+<script src="disease_data.js"></script>
 <script>
+        function populateResultsUI() {
+            const pred = getRandomPrediction();
+            const { category, disease, data, confidence } = pred;
+            
+            // Header logic
+            const isHealthy = disease === 'Healthy';
+            const iconBg = document.getElementById('result-icon-bg');
+            const icon = document.getElementById('result-icon');
+            const header = document.getElementById('result-header');
+            
+            if (isHealthy) {
+                iconBg.className = "w-12 h-12 bg-primary text-on-primary rounded-full flex items-center justify-center";
+                icon.textContent = "check_circle";
+                header.textContent = "Plant is Healthy";
+                header.className = "text-xl md:text-2xl font-bold font-display-lg text-primary";
+            } else {
+                iconBg.className = "w-12 h-12 bg-error text-on-error rounded-full flex items-center justify-center";
+                icon.textContent = "warning";
+                header.textContent = "Disease Detected";
+                header.className = "text-xl md:text-2xl font-bold font-display-lg text-error";
+            }
+            
+            document.getElementById('result-confidence').textContent = `Detection Confidence: ${confidence}%`;
+            document.getElementById('result-category').textContent = category;
+            
+            document.getElementById('result-title').textContent = disease === 'Healthy' ? `${category} (Healthy)` : `${category} ${disease}`;
+            document.getElementById('result-subtitle').innerHTML = data.subtitle || '<i>No additional info</i>';
+            
+            // Tags
+            const tagsContainer = document.getElementById('result-tags');
+            tagsContainer.innerHTML = '';
+            if (data.tags) {
+                data.tags.forEach(tag => {
+                    let colorClass = 'bg-surface-container-high text-on-surface-variant';
+                    if (tag.includes('Healthy') || tag.includes('Treatable')) colorClass = 'bg-primary-container text-on-primary-container';
+                    else if (tag.includes('Infection') || tag.includes('Risk') || tag.includes('Virus')) colorClass = 'bg-error-container text-on-error-container';
+                    
+                    tagsContainer.innerHTML += `<span class="px-3 py-1 rounded-full ${colorClass} text-sm font-bold">${tag}</span>`;
+                });
+            }
+            
+            // Symptoms
+            const symptomsContainer = document.getElementById('result-symptoms');
+            symptomsContainer.innerHTML = '';
+            if (data.symptoms) {
+                data.symptoms.forEach(sym => {
+                    symptomsContainer.innerHTML += `<li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></span> ${sym}</li>`;
+                });
+            }
+            
+            // Treatments
+            const treatmentsContainer = document.getElementById('result-treatments');
+            treatmentsContainer.innerHTML = '';
+            if (data.treatments) {
+                data.treatments.forEach(trt => {
+                    let borderColor = 'border-primary';
+                    let textColor = 'text-primary';
+                    if (trt.color === 'error') { borderColor = 'border-error'; textColor = 'text-error'; }
+                    else if (trt.color === 'secondary') { borderColor = 'border-secondary'; textColor = 'text-secondary'; }
+                    
+                    treatmentsContainer.innerHTML += `
+                    <div class="p-4 bg-surface-container-low rounded-xl border-l-4 ${borderColor}">
+                        <p class="font-bold ${textColor} mb-1">${trt.type}</p>
+                        <p class="text-sm">${trt.desc}</p>
+                    </div>`;
+                });
+            }
+        }
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgData = e.target.result;
+                document.getElementById('image-preview').src = imgData;
+                document.getElementById('processing-image').src = imgData;
+                document.getElementById('results-image').src = imgData;
+                document.getElementById('file-name').textContent = file.name;
+                document.getElementById('upload-prompt').classList.add('hidden');
+                document.getElementById('image-preview-container').classList.remove('hidden');
+                
+                const analyzeBtn = document.getElementById('analyze-btn');
+                analyzeBtn.classList.remove('opacity-50', 'pointer-events-none');
+                analyzeBtn.removeAttribute('disabled');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            handleFile(file);
+        }
+
+        function handleDrop(event) {
+            const file = event.dataTransfer.files[0];
+            handleFile(file);
+        }
+
+        function resetUpload(event) {
+            if (event) event.stopPropagation();
+            document.getElementById('file-input').value = '';
+            document.getElementById('image-preview').src = '';
+            document.getElementById('file-name').textContent = '';
+            
+            document.getElementById('image-preview-container').classList.add('hidden');
+            document.getElementById('upload-prompt').classList.remove('hidden');
+            
+            const analyzeBtn = document.getElementById('analyze-btn');
+            analyzeBtn.classList.add('opacity-50', 'pointer-events-none');
+            analyzeBtn.setAttribute('disabled', 'true');
+        }
+
         function transitionState(targetId) {
             document.querySelectorAll('[id^="state-"]').forEach(el => el.classList.add('state-hidden'));
             const target = document.getElementById(targetId);
@@ -481,7 +607,10 @@
                     if (progress >= 100) {
                         progress = 100;
                         clearInterval(interval);
-                        setTimeout(() => transitionState('state-results'), 500);
+                        setTimeout(() => {
+                            populateResultsUI();
+                            transitionState('state-results');
+                        }, 500);
                     }
                     bar.style.width = progress + '%';
                     text.innerText = Math.floor(progress) + '%';
