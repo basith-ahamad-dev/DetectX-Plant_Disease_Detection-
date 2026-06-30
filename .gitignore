@@ -1,0 +1,12 @@
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Models (optional, but usually good to ignore if very large, though here the user just asked about venv)
+# If the user wants to commit the model, we won't ignore it here.

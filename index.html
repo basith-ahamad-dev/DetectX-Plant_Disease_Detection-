@@ -480,8 +480,9 @@
 
 <script src="disease_data.js"></script>
 <script>
-        function populateResultsUI() {
-            const pred = getRandomPrediction();
+        let currentUploadedFile = null;
+
+        function populateResultsUI(pred) {
             const { category, disease, data, confidence } = pred;
             
             // Header logic
@@ -551,6 +552,7 @@
 
         function handleFile(file) {
             if (!file || !file.type.startsWith('image/')) return;
+            currentUploadedFile = file;
             
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -593,7 +595,7 @@
             analyzeBtn.setAttribute('disabled', 'true');
         }
 
-        function transitionState(targetId) {
+        async function transitionState(targetId) {
             document.querySelectorAll('[id^="state-"]').forEach(el => el.classList.add('state-hidden'));
             const target = document.getElementById(targetId);
             target.classList.remove('state-hidden');
@@ -601,20 +603,57 @@
             if (targetId === 'state-processing') {
                 const bar = document.getElementById('progress-bar');
                 const text = document.getElementById('percent-text');
+                
+                // Start a visual progress bar
                 let progress = 0;
                 const interval = setInterval(() => {
-                    progress += Math.random() * 15;
-                    if (progress >= 100) {
-                        progress = 100;
-                        clearInterval(interval);
-                        setTimeout(() => {
-                            populateResultsUI();
-                            transitionState('state-results');
-                        }, 500);
+                    if (progress < 90) {
+                        progress += Math.random() * 10;
+                        bar.style.width = progress + '%';
+                        text.innerText = Math.floor(progress) + '%';
                     }
-                    bar.style.width = progress + '%';
-                    text.innerText = Math.floor(progress) + '%';
                 }, 300);
+
+                try {
+                    const formData = new FormData();
+                    formData.append('image', currentUploadedFile);
+                    
+                    const response = await fetch('/predict', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    
+                    const result = await response.json();
+                    
+                    // Complete the progress bar
+                    clearInterval(interval);
+                    bar.style.width = '100%';
+                    text.innerText = '100%';
+                    
+                    const pred = getPredictionFromIndex(result.class_index, result.confidence);
+                    
+                    setTimeout(() => {
+                        populateResultsUI(pred);
+                        transitionState('state-results');
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error("Prediction failed:", error);
+                    clearInterval(interval);
+                    alert("Failed to analyze image. Falling back to demo mode.");
+                    
+                    // Fallback to random prediction for demo purposes if backend fails
+                    bar.style.width = '100%';
+                    text.innerText = '100%';
+                    setTimeout(() => {
+                        populateResultsUI(getRandomPrediction());
+                        transitionState('state-results');
+                    }, 500);
+                }
             }
         }
         function toggleMobileMenu() {

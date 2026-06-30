@@ -1,3 +1,44 @@
+const modelClasses = [
+    { category: "Apple", disease: "Apple Scab" },
+    { category: "Apple", disease: "Black Rot" },
+    { category: "Apple", disease: "Cedar Apple Rust" },
+    { category: "Apple", disease: "Healthy" },
+    { category: "Blueberry", disease: "Healthy" },
+    { category: "Cherry (including sour)", disease: "Powdery Mildew" },
+    { category: "Cherry (including sour)", disease: "Healthy" },
+    { category: "Corn (Maize)", disease: "Cercospora Leaf Spot / Gray Leaf Spot" },
+    { category: "Corn (Maize)", disease: "Common Rust" },
+    { category: "Corn (Maize)", disease: "Northern Leaf Blight" },
+    { category: "Corn (Maize)", disease: "Healthy" },
+    { category: "Grape", disease: "Black Rot" },
+    { category: "Grape", disease: "Esca (Black Measles)" },
+    { category: "Grape", disease: "Leaf Blight (Isariopsis Leaf Spot)" },
+    { category: "Grape", disease: "Healthy" },
+    { category: "Orange", disease: "Huanglongbing (Citrus Greening)" },
+    { category: "Peach", disease: "Bacterial Spot" },
+    { category: "Peach", disease: "Healthy" },
+    { category: "Pepper (Bell)", disease: "Bacterial Spot" },
+    { category: "Pepper (Bell)", disease: "Healthy" },
+    { category: "Potato", disease: "Early Blight" },
+    { category: "Potato", disease: "Late Blight" },
+    { category: "Potato", disease: "Healthy" },
+    { category: "Raspberry", disease: "Healthy" },
+    { category: "Soybean", disease: "Healthy" },
+    { category: "Squash", disease: "Powdery Mildew" },
+    { category: "Strawberry", disease: "Leaf Scorch" },
+    { category: "Strawberry", disease: "Healthy" },
+    { category: "Tomato", disease: "Bacterial Spot" },
+    { category: "Tomato", disease: "Early Blight" },
+    { category: "Tomato", disease: "Late Blight" },
+    { category: "Tomato", disease: "Leaf Mold" },
+    { category: "Tomato", disease: "Septoria Leaf Spot" },
+    { category: "Tomato", disease: "Spider Mites (Two-Spotted Spider Mite)" },
+    { category: "Tomato", disease: "Target Spot" },
+    { category: "Tomato", disease: "Tomato Yellow Leaf Curl Virus" },
+    { category: "Tomato", disease: "Tomato Mosaic Virus" },
+    { category: "Tomato", disease: "Healthy" }
+];
+
 const diseaseData = {
     "Apple": {
         "Apple Scab": {
@@ -462,6 +503,24 @@ const diseaseData = {
         }
     }
 };
+
+function getPredictionFromIndex(index, confidence) {
+    if (index < 0 || index >= modelClasses.length) {
+        return null;
+    }
+    
+    const mapping = modelClasses[index];
+    const category = mapping.category;
+    const disease = mapping.disease;
+    const data = diseaseData[category][disease];
+    
+    return {
+        category: category,
+        disease: disease,
+        data: data,
+        confidence: confidence
+    };
+}
 
 function getRandomPrediction() {
     const categories = Object.keys(diseaseData);
